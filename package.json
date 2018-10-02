@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Highoc/FS21-Frontend-II.git"
+    "url": "git+https://github.com/Highoc/2018-FS-11-Frontend-Morev.git"
   },
   "author": "Highoc",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Highoc/FS21-Frontend-II/issues"
+    "url": "https://github.com/Highoc/2018-FS-11-Frontend-Morev/issues"
   },
-  "homepage": "https://github.com/Highoc/FS21-Frontend-II#readme",
+  "homepage": "https://github.com/Highoc/2018-FS-11-Frontend-Morev#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",

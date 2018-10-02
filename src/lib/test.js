@@ -1,8 +1,8 @@
 const say = function (name) {
     window.addEventListener('load', function () {
-        var div = document.createElement('div');
-            div.innerHTML = `Hello, ${name}`;
-            div.style.background='gray';
+        const div = document.createElement('div');
+              div.innerHTML = `Hello, ${name}`;
+              div.className = 'myDiv';
         document.body.appendChild(div);
     });
 }
