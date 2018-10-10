@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pretest": "eslint --ignore-path .gitignore ."
+    "pretest": "eslint --ignore-path .gitignore .",
+    "clean": "rm -r dist && mkdir dist",
+    "build": "npm run clean && webpack"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^3.2.0",
     "style-loader": "^0.23.0",
-    "webpack": "^4.20.2"
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
   }
 }
