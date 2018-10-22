@@ -1,26 +1,28 @@
 /* eslint no-underscore-dangle: 0 */
 /* eslint-env browser */
 
-// import styles from './index.css';
 import shadowStyles from './shadow.css';
 
-// const slotName = 'message-input';
+const slotName = 'message-input';
 
 const template = `
     <style>${shadowStyles.toString()}</style>
     <form>
         <div class="result"></div>
-        <form-input name="email_text" placeholder="Enter email" slot="message-input">
+        <form-input name="email_text" placeholder="Enter email" slot="${slotName}">
             <span slot="icon"></span>
         </form-input>
-        <form-input name="first_name_text" placeholder="Enter name" slot="message-input">
+        <form-input name="first_name_text" placeholder="Enter name" slot="${slotName}">
             <span slot="icon"></span>
         </form-input>
-        <form-input name="second_name_text" placeholder="Enter surname" slot="message-input">
+        <form-input name="second_name_text" placeholder="Enter surname" slot="${slotName}">
             <span slot="icon"></span>
         </form-input>
+        <form-geoposition></form-geoposition>
+        <form-file></form-file>
     </form>
 `;
+
 class AuthorInfoForm extends HTMLElement {
   constructor() {
     super();
