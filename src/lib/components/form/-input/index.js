@@ -1,7 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
 /* eslint-env browser */
 
-// import styles from './index.css';
 import shadowStyles from './shadow.css';
 
 const template = `
@@ -9,10 +8,6 @@ const template = `
     <input/>
     <slot name="icon"></slot>
 `;
-
-// const iconTemplate = `
-// <div class="${styles.icon}" />
-// `;
 
 class FormInput extends HTMLElement {
   constructor() {

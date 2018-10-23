@@ -1,0 +1,30 @@
+.image-area {
+    border: 1px solid #CCC;
+    width: 300px;
+    height: 300px;
+    margin: 10px;
+    padding: 5px;
+    position: relative;
+}
+
+img {
+    max-height: 100%;
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.image-area.hover {
+    background: #ddd;
+    border-color: #aaa;
+}
+
+.image-area.error {
+    background: #faa;
+    border-color: #f00;
+}
+
+.image-area.drop {
+    background: #afa;
+    border-color: #0f0;
+}
