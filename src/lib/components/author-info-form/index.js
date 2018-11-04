@@ -3,23 +3,16 @@
 
 import shadowStyles from './shadow.css';
 
-const slotName = 'message-input';
-
 const template = `
     <style>${shadowStyles.toString()}</style>
     <form>
         <div class="result"></div>
-        <form-input name="email_text" placeholder="Enter email" slot="${slotName}">
-            <span slot="icon"></span>
-        </form-input>
-        <form-input name="first_name_text" placeholder="Enter name" slot="${slotName}">
-            <span slot="icon"></span>
-        </form-input>
-        <form-input name="second_name_text" placeholder="Enter surname" slot="${slotName}">
-            <span slot="icon"></span>
-        </form-input>
+        <form-input name="first_name" placeholder="Enter name" value="First name"></form-input>
+        <form-input name="second_name" placeholder="Enter surname" value="Second name"></form-input>
+        <form-input name="email" placeholder="Enter email" value="Email"></form-input>
         <form-geoposition></form-geoposition>
         <form-file></form-file>
+        <input type="submit" value="Сохранить"/>
     </form>
 `;
 
@@ -55,23 +48,18 @@ class AuthorInfoForm extends HTMLElement {
 
   _addHandlers() {
     this._elements.form.addEventListener('submit', this._onSubmit.bind(this));
-    this._elements.form.addEventListener('keypress', this._onKeyPress.bind(this));
-    // this._elements.inputSlot.addEventListener('slotchange', this._onSlotChange.bind(this));
   }
 
   _onSubmit(event) {
+    let formdata = new FormData();
+
     this._elements.message.innerText = Array.from(this._elements.form.elements).map(
       el => el.value,
     ).join(', ');
     localStorage.setItem('author_info_value', this._elements.message.innerText);
+
     event.preventDefault();
     return false;
-  }
-
-  _onKeyPress(event) {
-    if (event.keyCode === 13) {
-      this._elements.form.dispatchEvent(new Event('submit'));
-    }
   }
 }
 
