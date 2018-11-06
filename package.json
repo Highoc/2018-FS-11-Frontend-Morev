@@ -1,36 +1,27 @@
 {
-  "name": "my-project",
-  "version": "1.0.0",
-  "description": "technotrack project",
-  "main": "index.js",
+  "name": "@highoc/front-app",
+  "version": "0.1.1",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-scripts": "2.1.1",
+    "reactstrap": "^6.5.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "pretest": "eslint --ignore-path .gitignore .",
-    "clean": "rm -r dist && mkdir dist",
-    "build": "npm run clean && webpack"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Highoc/2018-FS-11-Frontend-Morev.git"
+  "eslintConfig": {
+    "extends": "react-app"
   },
-  "author": "Highoc",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Highoc/2018-FS-11-Frontend-Morev/issues"
-  },
-  "homepage": "https://github.com/Highoc/2018-FS-11-Frontend-Morev#readme",
-  "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "css-loader": "^1.0.0",
-    "eslint": "^5.6.1",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "html-webpack-plugin": "^3.2.0",
-    "style-loader": "^0.23.0",
-    "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.2"
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "files": [ "build" ]
 }

@@ -1,3 +1,16 @@
-import say from './lib/test';
+/* eslint-env browser */
 
-say('Javascript');
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+ReactDOM.render(
+	<App action="/" />,
+	document.getElementById('root')
+);
+
+serviceWorker.unregister();
