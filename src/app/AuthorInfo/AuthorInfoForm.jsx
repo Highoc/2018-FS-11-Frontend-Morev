@@ -8,6 +8,8 @@ import GeoInput from './components/GeoInput';
 import getCSRFToken from './helpers/getCSRFToken';
 import setCookie from './helpers/setCookie';
 
+import './static/styles/AuthorInfo.css';
+
 export default class AuthorInfoForm extends Component {
   constructor(props) {
     super(props);
@@ -75,51 +77,69 @@ export default class AuthorInfoForm extends Component {
     const { action, method, enctype } = this.props;
     const { status, csrfmiddlewaretoken } = this.state;
     return (
-      <form
-        action={action}
-        method={method}
-        encType={enctype}
-        onSubmit={this.handleSubmit}
-        name="AuthorInfoForm"
-      >
+      <div className="AuthorInfo px-5 pt-5">
+        <h2>Ваши данные</h2>
+        <hr />
+        <form
+          action={action}
+          method={method}
+          encType={enctype}
+          onSubmit={this.handleSubmit}
+          name="AuthorInfoForm"
+        >
+          <div className="row">
+            <div className="col-md-5">
+              <ImageInput
+                name="photo"
+                description="Выберите ваше фото"
+              />
+            </div>
 
-        <ImageInput
-          name="photo"
-          description="Выберите ваше фото"
-        />
+            <div className="col-md-7">
+              <TextInput
+                name="name"
+                description="Имя"
+                placeholder="Введите ваше имя..."
+              />
 
-        <TextInput
-          name="name"
-          description="Имя"
-          placeholder="Введите ваше имя..."
-        />
+              <TextInput
+                name="surname"
+                description="Фамилия"
+                placeholder="Введите вашу фамилию..."
+              />
 
-        <TextInput
-          name="surname"
-          description="Фамилия"
-          placeholder="Введите вашу фамилию..."
-        />
+              <TextInput
+                name="email"
+                description="Email"
+                placeholder="Введите ваш email..."
+              />
 
-        <TextInput
-          name="email"
-          description="Email"
-          placeholder="Введите ваш email..."
-        />
+              <GeoInput
+                name="coords"
+                description="Ваши координаты"
+              />
+            </div>
+          </div>
+          <hr />
+          <div className="row">
+            <div className="col">
+              <h3>
+                Статус отправки:
+                {` ${status}`}
+              </h3>
+            </div>
+            <div>
+              <input
+                type="submit"
+                value="Сохранить изменения"
+                className="btn btn-primary float-right mx-3"
+              />
+            </div>
+          </div>
+          <input type="hidden" name="csrfmiddlewaretoken" value={csrfmiddlewaretoken} />
 
-        <GeoInput
-          name="coords"
-          description="Ваши координаты"
-        />
-
-        {status}
-
-        <input
-          type="submit"
-          value="Сохранить изменения"
-        />
-
-        <input type="hidden" name="csrfmiddlewaretoken" value={csrfmiddlewaretoken} />
-      </form>
+        </form>
+      </div>
     );
   }
 }

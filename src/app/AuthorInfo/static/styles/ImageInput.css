@@ -1,0 +1,27 @@
+.AvatarArea {
+    height: 350px;
+    width: 100%;
+    background-color: white;
+}
+
+.AvatarPreview {
+    max-height: 100%;
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.AvatarArea.hover {
+    background: #ddd;
+    border-color: #aaa;
+}
+
+.AvatarArea.error {
+    background: #faa;
+    border-color: #f00;
+}
+
+.AvatarArea.drop {
+    background: #afa;
+    border-color: #0f0;
+}

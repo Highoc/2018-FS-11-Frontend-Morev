@@ -9,8 +9,8 @@ export default class GeoInput extends Component {
     super(props);
     this.state = {
       coords: {
-        latitude: '',
-        longitude: '',
+        latitude: localStorage.getItem('coords-latitude'),
+        longitude: localStorage.getItem('coords-longitude'),
       },
     };
 
@@ -33,6 +33,9 @@ export default class GeoInput extends Component {
             longitude: result.coords.longitude,
           },
         });
+
+        localStorage.setItem('coords-latitude', result.coords.latitude);
+        localStorage.setItem('coords-longitude', result.coords.longitude);
       },
       (error) => {
         this.setState({
@@ -41,6 +44,9 @@ export default class GeoInput extends Component {
             longitude: null,
           },
         });
+
+        localStorage.setItem('coords-latitude', '');
+        localStorage.setItem('coords-longitude', '');
       },
     );
 
@@ -52,37 +58,45 @@ export default class GeoInput extends Component {
     const { coords } = this.state;
 
     return (
-      <div>
-        <b>
-          {description}
-          :
-        </b>
-        <label htmlFor={`id-input-${{ name }}-latitude`}>
-          Широта
+      <div className="row pt-1">
+        <div className="col">
+          <b>
+            {description}
+            :
+          </b>
           <input
-            id={`id-input-${{ name }}-latitude`}
-            type="text"
-            name={`${{ name }}-latitude`}
-            value={coords.latitude}
-            readOnly
+            type="button"
+            onClick={this.handleClick}
+            value="Запросить ваше местоположение"
+            className="btn btn-primary"
           />
-        </label>
-        <label htmlFor={`id-input-${{ name }}-longitude`}>
-          Долгота
-          <input
-            id={`id-input-${{ name }}-longitude`}
-            type="text"
-            name={`${{ name }}-longitude`}
-            value={coords.longitude}
-            readOnly
-          />
-        </label>
-
-        <input
-          type="button"
-          onClick={this.handleClick}
-          value="Запросить ваше местоположение"
-        />
+        </div>
+        <div className="col form-group">
+          <label htmlFor={`id-input-${name}-latitude`}>
+            Широта:
+            <input
+              id={`id-input-${name}-latitude`}
+              type="text"
+              name={`${name}-latitude`}
+              value={coords.latitude}
+              readOnly
+              className="form-control"
+            />
+          </label>
+        </div>
+        <div className="col form-group">
+          <label htmlFor={`id-input-${name}-longitude`}>
+            Долгота:
+            <input
+              id={`id-input-${name}-longitude`}
+              type="text"
+              name={`${name}-longitude`}
+              value={coords.longitude}
+              readOnly
+              className="form-control"
+            />
+          </label>
+        </div>
       </div>
     );
   }

@@ -7,6 +7,8 @@ import AuthorInfoForm from './app/AuthorInfo/AuthorInfoForm';
 
 export default function App(props) {
   return (
-    <AuthorInfoForm action="test" />
+    <div className="container">
+      <AuthorInfoForm action="test" />
+    </div>
   );
 }
