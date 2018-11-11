@@ -43,6 +43,17 @@ export default class CategoryPreview extends Component {
 }
 
 CategoryPreview.propTypes = {
-  category: PropTypes.shape.isRequired,
-  topics: PropTypes.arrayOf.isRequired,
+  category: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    topics: PropTypes.array.isRequired,
+  }).isRequired,
+  topics: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
 export default class Detail extends Component {
@@ -26,17 +25,17 @@ export default class Detail extends Component {
           </div>
         </div>
 
-        <a className="btn btn-primary float-right" role="button">Добавить топик</a>
+        <a className="btn btn-primary float-right" role="button" href="/">Добавить топик</a>
 
         <h3>Топики</h3>
         <div className="row">
           {
             topics.length !== 0
               ? topics.map((topic, i) => (
-                <div className="col-md-12">
+                <div key={topic.id} className="col-md-12">
                   <div className="card mt-1">
                     <div className="card-body">
-                      <a className="card-link">{topic.name}</a>
+                      <a className="card-link" href="/">{topic.name}</a>
                       <hr />
                       <div>
                         Автор: ...

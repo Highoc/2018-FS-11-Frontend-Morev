@@ -9,8 +9,8 @@ export default class GeoInput extends Component {
     super(props);
     this.state = {
       coords: {
-        latitude: localStorage.getItem('coords-latitude'),
-        longitude: localStorage.getItem('coords-longitude'),
+        latitude: localStorage.getItem('coords-latitude') || '',
+        longitude: localStorage.getItem('coords-longitude') || '',
       },
     };
 
