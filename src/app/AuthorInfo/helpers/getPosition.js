@@ -1,6 +1,4 @@
-/* eslint-env browser */
-
-function getPosition(options) {
+export default function getPosition(options) {
   return new Promise((resolve, reject) => {
     window.navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -13,5 +11,3 @@ function getPosition(options) {
     );
   });
 }
-
-export default getPosition;

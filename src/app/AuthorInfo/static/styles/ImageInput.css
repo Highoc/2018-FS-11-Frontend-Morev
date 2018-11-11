@@ -1,30 +1,27 @@
-.image-area {
-    border: 1px solid #CCC;
-    width: 300px;
-    height: 300px;
-    margin: 10px;
-    padding: 5px;
-    position: relative;
+.AvatarArea {
+    height: 350px;
+    width: 100%;
+    background-color: white;
 }
 
-img {
+.AvatarPreview {
     max-height: 100%;
     max-width: 100%;
     display: block;
     margin: auto;
 }
 
-.image-area.hover {
+.AvatarArea.hover {
     background: #ddd;
     border-color: #aaa;
 }
 
-.image-area.error {
+.AvatarArea.error {
     background: #faa;
     border-color: #f00;
 }
 
-.image-area.drop {
+.AvatarArea.drop {
     background: #afa;
     border-color: #0f0;
 }
