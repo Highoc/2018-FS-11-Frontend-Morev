@@ -145,12 +145,13 @@ export default class AuthorInfoForm extends Component {
 }
 
 AuthorInfoForm.propTypes = {
-  action: PropTypes.string.isRequired,
+  action: PropTypes.string,
   method: PropTypes.string,
   enctype: PropTypes.string,
 };
 
 AuthorInfoForm.defaultProps = {
+  action: 'test',
   method: 'post',
   enctype: 'multipart/form-data',
 };
