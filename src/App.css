@@ -1,6 +1,8 @@
 main {
-  height: 100%;
-  border-left: 1px solid darkgray;
-  border-right: 1px solid darkgray;
+  margin: 20px 0 20px 0;
+  padding: 20px;
+  min-height: 100%;
+  height:auto;
+  border: 1px solid darkgray;
   background-color: white;
 }
