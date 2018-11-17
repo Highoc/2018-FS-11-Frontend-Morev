@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 export default class TextInput extends Component {
   constructor(props) {
     super(props);
-    const value = localStorage.getItem(props.name);
-    this.state = { value: value === null ? '' : value };
+
+    this.state = {
+      value: localStorage.getItem(props.name) || '',
+    };
 
     this.handleChange = this.handleChange.bind(this);
   }
