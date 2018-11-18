@@ -1,8 +1,11 @@
-main {
-  margin: 20px 0 20px 0;
-  padding: 20px;
-  min-height: 100%;
-  height:auto;
-  border: 1px solid darkgray;
-  background-color: white;
+.main {
+    padding-top: 20px;
+    min-height: 100%;
+    height:auto;
+    border: 1px solid #f5f5f5;
+    background-color: white;
+}
+
+.content {
+    height: 100%;
 }
