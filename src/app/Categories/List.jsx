@@ -1,61 +1,105 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import PropTypes from 'prop-types';
+
+import {
+  Pagination, PageItem, PageLink, Col, Row,
+} from 'mdbreact';
+
 import CategoryPreview from './components/CategoryPreview';
 
-export default class CategoriesList extends Component {
+class CategoriesList extends Component {
   constructor(props) {
     super(props);
+    const { categories } = props;
 
     this.state = {
-      listId: 1,
-      categories: list,
+      maxPageId: Math.floor(categories.length / PAGE_LENGTH) + 1,
+      currentPageId: 1,
+      currentCategories: this.getPage(1),
     };
+
+    this.handleNextPage = this.handleNextPage.bind(this);
+    this.handlePrevPage = this.handlePrevPage.bind(this);
+  }
+
+  getPage(pageId) {
+    const { categories } = this.props;
+    return categories.slice((pageId - 1) * PAGE_LENGTH, pageId * PAGE_LENGTH);
+  }
+
+  handleNextPage(event) {
+    const { currentPageId } = this.state;
+    this.setState({
+      currentPageId: currentPageId + 1,
+      currentCategories: this.getPage(currentPageId + 1),
+    });
+  }
+
+  handlePrevPage(event) {
+    const { currentPageId } = this.state;
+    this.setState({
+      currentPageId: currentPageId - 1,
+      currentCategories: this.getPage(currentPageId - 1),
+    });
   }
 
   render() {
-    const { listId, categories } = this.state;
+    const { currentPageId, maxPageId, currentCategories } = this.state;
     return (
       <div>
-        <h3>Категории</h3>
-        {
-          categories.map(
-            (category, i) => (
-              <CategoryPreview
-                key={category.id}
-                category={category}
-                topics={getSubArray(topics, category.topics)}
-              />),
-          )
-        }
-        <h3>{`Страница ${listId}`}</h3>
+        <h2 className="px-3">Категории</h2>
+        <Col>
+          <hr />
+          {
+            currentCategories.map(
+              (category, i) => (
+                <Row key={category.id} className="my-3">
+                  <CategoryPreview
+                    categoryId={category.id}
+                  />
+                </Row>
+              ),
+            )
+          }
+          <hr />
+          <Row className="d-flex justify-content-center">
+            <Pagination className="pagination-lg">
+              <PageItem disabled={currentPageId === 1}>
+                <PageLink onClick={this.handlePrevPage} className="page-link">Назад</PageLink>
+              </PageItem>
+              <PageItem active>
+                <PageLink className="page-link">{currentPageId}</PageLink>
+              </PageItem>
+              <PageItem disabled={currentPageId === maxPageId}>
+                <PageLink onClick={this.handleNextPage} className="page-link">Вперед</PageLink>
+              </PageItem>
+            </Pagination>
+          </Row>
+        </Col>
       </div>
     );
   }
 }
 
-const list = [
-  { id: 1, name: 'Категория 1', description: 'Описание категории 1', topics: [1, 5, 6, 8] },
-  { id: 2, name: 'Категория 2', description: 'Описание категории 2', topics: [1, 2, 9, 8] },
-  { id: 3, name: 'Категория 3', description: 'Описание категории 3', topics: [3, 5, 6, 8] },
-  { id: 4, name: 'Категория 4', description: 'Описание категории 4', topics: [5, 6, 7, 8] },
-  { id: 5, name: 'Категория 5', description: 'Описание категории 5', topics: [1, 3, 6, 9] },
-  { id: 6, name: 'Категория 6', description: 'Описание категории 6', topics: [2, 5, 6, 8] },
-];
+const mapStateToProps = (state) => {
+  return {
+    categories: state.ctr.categories,
+  };
+};
 
-const topics = [
-  { id: 1, name: 'Топик 1', description: 'Описание топика 1' },
-  { id: 2, name: 'Топик 2', description: 'Описание топика 2' },
-  { id: 3, name: 'Топик 3', description: 'Описание топика 3' },
-  { id: 4, name: 'Топик 4', description: 'Описание топика 4' },
-  { id: 5, name: 'Топик 5', description: 'Описание топика 5' },
-  { id: 6, name: 'Топик 6', description: 'Описание топика 6' },
-  { id: 7, name: 'Топик 7', description: 'Описание топика 7' },
-  { id: 8, name: 'Топик 8', description: 'Описание топика 8' },
-  { id: 9, name: 'Топик 9', description: 'Описание топика 9' },
-  { id: 10, name: 'Топик 10', description: 'Описание топика 10' },
-];
+export default connect(mapStateToProps)(CategoriesList);
 
-const getSubArray = (array, numbers) => {
-  const arr = [];
-  numbers.map(number => arr.push(array[number]));
-  return arr;
+const PAGE_LENGTH = 5;
+
+CategoriesList.propTypes = {
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      topics_id: PropTypes.array.isRequired,
+    }).isRequired,
+  ).isRequired,
 };

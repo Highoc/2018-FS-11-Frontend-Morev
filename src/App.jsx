@@ -13,7 +13,6 @@ import {
   Container,
 } from 'mdbreact';
 
-
 import AuthorInfo from './app/AuthorInfo/AuthorInfoForm';
 import Footer from './app/Footer/Footer';
 import Category from './app/Categories/Category';
