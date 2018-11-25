@@ -1,29 +1,34 @@
 /* react/prefer-stateless-function:0 */
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './App.css';
 
-import AuthorInfoForm from './app/AuthorInfo/AuthorInfoForm';
+import 'font-awesome/css/font-awesome.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css';
+
+import {
+  Container,
+} from 'mdbreact';
+
+import AuthorInfo from './app/AuthorInfo/AuthorInfoForm';
+import Footer from './app/Footer/Footer';
 import Category from './app/Categories/Category';
+import NavBar from './app/Navbar/Navbar';
 
 export default function App(props) {
   return (
     <Router>
-      <main className="container">
-        <ul>
-          <li>
-            <Link to="/user/">AuthorInfo view</Link>
-          </li>
-          <li>
-            <Link to="/category/list/">CategoriesList view</Link>
-          </li>
-        </ul>
-        <br />
-        <Route path="/user" exact component={AuthorInfoForm} />
-        <Route path="/category" component={Category} />
-      </main>
+      <div className="content">
+        <NavBar />
+        <Container className="main">
+          <Route path="/user" exact component={AuthorInfo} />
+          <Route path="/category" component={Category} />
+        </Container>
+        <Footer />
+      </div>
     </Router>
   );
 }

@@ -10,8 +10,8 @@ export default function Category(props) {
   const { match } = props;
   return (
     <div>
-      <Route path={`${match.path}/list/`} exact component={List} />
-      <Route path={`${match.path}/:id/detail`} component={Detail} />
+      <Route path={`${match.path}/list`} exact component={List} />
+      <Route path={`${match.path}/:categoryId/detail`} component={Detail} />
     </div>
   );
 }
