@@ -7,12 +7,15 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import * as actionTypes from '../../store/actions';
+import { logout } from '../../store/actions/auth';
+import { getAllUsers } from '../../store/actions/categories';
 import getElemById from '../Categories/helpers/getElemById';
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
+
+    props.getAllUsers();
 
     this.state = {
       isOpen: false,
@@ -23,9 +26,15 @@ class Navbar extends Component {
   }
 
   render() {
-    const { user, onLogin, onLogout, users } = this.props;
+    const {
+      userId, onLogout, users, isAuthorized,
+    } = this.props;
     const { isOpen } = this.state;
-    const userInfo = getElemById(users, user.user_id);
+    let userInfo = getElemById(users, userId);
+
+    if (!userInfo) {
+      userInfo = { login: 'Loading' };
+    }
 
     return (
       <MDBNavbar color="blue" dark expand="md">
@@ -36,12 +45,15 @@ class Navbar extends Component {
           onClick={this.toggleCollapse}
         />
         {
-          user.is_authorized
+          isAuthorized
             ? (
               <Collapse id="navbarCollapse3" isOpen={isOpen} navbar>
                 <NavbarNav left>
                   <NavItem active>
                     <NavLink to="/">О проекте</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink to="/feedback">Оставить фидбэк</NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink to="/user/">Обо мне</NavLink>
@@ -85,12 +97,14 @@ class Navbar extends Component {
             ) : (
               <NavbarNav right>
                 <NavItem>
-                  <NavLink to="/" onClick={onLogin}>Войти</NavLink>
+                  <NavLink to="/register">Зарегистрироваться</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/login">Войти</NavLink>
                 </NavItem>
               </NavbarNav>
             )
         }
-
       </MDBNavbar>
     );
   }
@@ -99,20 +113,18 @@ class Navbar extends Component {
 const mapStateToProps = (state) => {
   return {
     users: state.ctr.users,
-    user: state.usr.user,
+    userId: state.auth.userId,
+    isAuthorized: state.auth.token !== null,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogin: (event) => {
-      event.preventDefault();
-      dispatch({ type: actionTypes.USER_LOGIN });
-    },
     onLogout: (event) => {
       event.preventDefault();
-      dispatch({ type: actionTypes.USER_LOGOUT });
+      dispatch(logout());
     },
+    getAllUsers: () => dispatch(getAllUsers()),
   };
 };
 
@@ -120,6 +132,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
 
 
 Navbar.propTypes = {
+  isAuthorized: PropTypes.bool.isRequired,
   users: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -128,10 +141,7 @@ Navbar.propTypes = {
       surname: PropTypes.string.isRequired,
     }).isRequired,
   ).isRequired,
-  user: PropTypes.shape({
-    user_id: PropTypes.number.isRequired,
-    is_authorized: PropTypes.bool.isRequired,
-  }).isRequired,
-  onLogin: PropTypes.func.isRequired,
+  userId: PropTypes.number.isRequired,
   onLogout: PropTypes.func.isRequired,
+  getAllUsers: PropTypes.func.isRequired,
 };

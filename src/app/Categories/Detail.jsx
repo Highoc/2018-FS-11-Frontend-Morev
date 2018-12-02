@@ -133,7 +133,7 @@ Detail.propTypes = {
       id: PropTypes.number.isRequired,
       author_id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
       categories_id: PropTypes.array.isRequired,
     }).isRequired,
   ).isRequired,

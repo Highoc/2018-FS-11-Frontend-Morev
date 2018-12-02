@@ -1,5 +1,8 @@
+import axios from 'axios';
+import { backend, loginURL } from '../../../configs/configs';
+
 export default function getCSRFToken() {
-  const initGET = { method: 'GET' };
-  const request = new Request('http://localhost:8000/test/');
-  return fetch(request, initGET).then(resp => resp.json());
+  return axios.get(`${backend}/${loginURL}/`)
+    .then(response => console.log(response))
+    .catch(error => console.log(error));
 }

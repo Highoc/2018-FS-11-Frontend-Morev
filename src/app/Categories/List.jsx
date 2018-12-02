@@ -8,6 +8,7 @@ import {
 } from 'mdbreact';
 
 import CategoryPreview from './components/CategoryPreview';
+import { getAllTopcis, getAllCategories } from '../../store/actions/categories';
 
 class CategoriesList extends Component {
   constructor(props) {
@@ -15,17 +16,34 @@ class CategoriesList extends Component {
     const { categories } = props;
 
     this.state = {
+      categories: categories,
       maxPageId: Math.floor(categories.length / PAGE_LENGTH) + 1,
       currentPageId: 1,
-      currentCategories: this.getPage(1),
+      currentCategories: [],
     };
+
+    props.getAllCategories();
+    props.getAllTopics();
 
     this.handleNextPage = this.handleNextPage.bind(this);
     this.handlePrevPage = this.handlePrevPage.bind(this);
+    this.getPage = this.getPage.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { categories } = this.state;
+    console.log('+');
+    if (categories.length !== nextProps.categories.length) {
+      this.setState({
+        maxPageId: Math.floor(nextProps.categories.length / PAGE_LENGTH) + 1,
+        categories: nextProps.categories,
+        currentCategories: nextProps.categories.slice(0, PAGE_LENGTH),
+      });
+    }
   }
 
   getPage(pageId) {
-    const { categories } = this.props;
+    const { categories } = this.state;
     return categories.slice((pageId - 1) * PAGE_LENGTH, pageId * PAGE_LENGTH);
   }
 
@@ -89,7 +107,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(CategoriesList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAllTopics: () => dispatch(getAllTopcis()),
+    getAllCategories: () => dispatch(getAllCategories()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesList);
 
 const PAGE_LENGTH = 5;
 
@@ -102,4 +127,6 @@ CategoriesList.propTypes = {
       topics_id: PropTypes.array.isRequired,
     }).isRequired,
   ).isRequired,
+  getAllCategories: PropTypes.func.isRequired,
+  getAllTopics: PropTypes.func.isRequired,
 };
