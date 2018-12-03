@@ -12,59 +12,64 @@ import { getAllTopcis, getAllCategories } from '../../store/actions/categories';
 
 class CategoriesList extends Component {
   constructor(props) {
+    console.log('[CategoriesList] Constructor');
     super(props);
-    const { categories } = props;
+    const { categories, isInitialized } = props;
+
+    if (!isInitialized) {
+      props.getAllCategories();
+      props.getAllTopics();
+    }
 
     this.state = {
-      categories: categories,
-      maxPageId: Math.floor(categories.length / PAGE_LENGTH) + 1,
+      maxPageId: CategoriesList.getMaxPageId(categories),
       currentPageId: 1,
-      currentCategories: [],
+      currentCategories: CategoriesList.getPage(categories, 1),
     };
-
-    props.getAllCategories();
-    props.getAllTopics();
 
     this.handleNextPage = this.handleNextPage.bind(this);
     this.handlePrevPage = this.handlePrevPage.bind(this);
-    this.getPage = this.getPage.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { categories } = this.state;
-    console.log('+');
-    if (categories.length !== nextProps.categories.length) {
-      this.setState({
-        maxPageId: Math.floor(nextProps.categories.length / PAGE_LENGTH) + 1,
-        categories: nextProps.categories,
-        currentCategories: nextProps.categories.slice(0, PAGE_LENGTH),
-      });
-    }
+    console.log('[CategoriesList] WillReceiveProps');
+    const { categories } = nextProps;
+    this.setState({
+      maxPageId: CategoriesList.getMaxPageId(categories),
+      currentPageId: 1,
+      currentCategories: CategoriesList.getPage(categories, 1),
+    });
   }
 
-  getPage(pageId) {
-    const { categories } = this.state;
-    return categories.slice((pageId - 1) * PAGE_LENGTH, pageId * PAGE_LENGTH);
+  static getPage(categories, pageId, pageLength = PAGE_LENGTH) {
+    return categories.slice((pageId - 1) * pageLength, pageId * pageLength);
+  }
+
+  static getMaxPageId(categories, pageLength = PAGE_LENGTH) {
+    return Math.ceil(categories.length / pageLength);
   }
 
   handleNextPage(event) {
     const { currentPageId } = this.state;
+    const { categories } = this.props;
     this.setState({
       currentPageId: currentPageId + 1,
-      currentCategories: this.getPage(currentPageId + 1),
+      currentCategories: CategoriesList.getPage(categories, currentPageId + 1),
     });
   }
 
   handlePrevPage(event) {
     const { currentPageId } = this.state;
+    const { categories } = this.props;
     this.setState({
       currentPageId: currentPageId - 1,
-      currentCategories: this.getPage(currentPageId - 1),
+      currentCategories: CategoriesList.getPage(categories, currentPageId - 1),
     });
   }
 
   render() {
     const { currentPageId, maxPageId, currentCategories } = this.state;
+    console.log('[CategoriesList] Render');
     return (
       <div>
         <h2 className="px-3">Категории</h2>
@@ -103,6 +108,7 @@ class CategoriesList extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    isInitialized: state.ctr.categories.length !== 0,
     categories: state.ctr.categories,
   };
 };
@@ -129,4 +135,5 @@ CategoriesList.propTypes = {
   ).isRequired,
   getAllCategories: PropTypes.func.isRequired,
   getAllTopics: PropTypes.func.isRequired,
+  isInitialized: PropTypes.bool.isRequired,
 };

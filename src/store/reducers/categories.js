@@ -40,6 +40,22 @@ const topicsGetAll = (state, action) => {
   };
 };
 
+const newCategoryIsPublished = (state, action) => {
+  const { category } = action.payload;
+  return {
+    ...state,
+    categories: [...state.categories, category],
+  };
+};
+
+const newTopicIsPublished = (state, action) => {
+  const { topic } = action.payload;
+  return {
+    ...state,
+    topics: [...state.topics, topic],
+  };
+};
+
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -47,6 +63,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.USER_GET_ALL: return userGetAll(state, action);
     case actionTypes.CATEGORIES_GET_ALL: return categoriesGetAll(state, action);
     case actionTypes.TOPICS_GET_ALL: return topicsGetAll(state, action);
+    case actionTypes.NEW_CATEGORY_IS_PUBLISHED: return newCategoryIsPublished(state, action);
+    case actionTypes.NEW_TOPIC_IS_PUBLISHED: return newTopicIsPublished(state, action);
     default:
       return {
         ...state,
