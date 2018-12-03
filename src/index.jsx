@@ -1,11 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { createStore, combineReducers } from 'redux';
+import {
+  createStore, compose, applyMiddleware, combineReducers
+} from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
-import userReducer from './store/reducers/user';
 import categoriesReducer from './store/reducers/categories';
+import authorizationReducer from './store/reducers/authorization';
+import registrationReducer from './store/reducers/registration';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -13,14 +17,17 @@ import App from './App';
 import './index.css';
 
 const rootReducer = combineReducers({
-  usr: userReducer,
   ctr: categoriesReducer,
+  auth: authorizationReducer,
+  reg: registrationReducer,
 });
 
 /* eslint-disable no-underscore-dangle */
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
-  rootReducer, /* preloadedState, */
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk)),
 );
 /* eslint-enable */
 
