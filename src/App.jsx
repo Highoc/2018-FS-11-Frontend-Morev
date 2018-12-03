@@ -29,6 +29,8 @@ import FeedbackContainer from './app/FeedbackContainer/FeedbackContainer';
 import Registration from './app/Authorization/Registration';
 import Login from './app/Authorization/Login';
 
+import Centrifuge from './app/Centrifuge/Centrifuge';
+
 function Intro() {
   return <h2>Привет</h2>;
 }
@@ -56,13 +58,16 @@ class App extends Component {
     const { isAuthorized } = this.props;
     if (isAuthorized) {
       routes = (
-        <Switch>
-          <Route path="/home" exact component={Home} />
-          <Route path="/user" exact component={AuthorInfo} />
-          <Route path="/category" component={Category} />
-          <Route path="/feedback" exact component={FeedbackContainer} />
-          <Redirect to="/home" />
-        </Switch>
+        <div>
+          <Switch>
+            <Route path="/home" exact component={Home} />
+            <Route path="/user" exact component={AuthorInfo} />
+            <Route path="/category" component={Category} />
+            <Route path="/feedback" exact component={FeedbackContainer} />
+            <Redirect to="/home" />
+          </Switch>
+          <Centrifuge />
+        </div>
       );
     }
 
