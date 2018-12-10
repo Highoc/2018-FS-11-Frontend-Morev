@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions';
+import getElemById from "../../app/Categories/helpers/getElemById";
 
 const initialState = {
   categories: [],
@@ -50,9 +51,15 @@ const newCategoryIsPublished = (state, action) => {
 
 const newTopicIsPublished = (state, action) => {
   const { topic } = action.payload;
+  const newCategories = state.categories;
+  topic.categories_id.map((categoryId) => {
+    const category = getElemById(newCategories, categoryId);
+    category.topics_id.push(topic.id);
+  });
   return {
     ...state,
     topics: [...state.topics, topic],
+    categories: newCategories,
   };
 };
 

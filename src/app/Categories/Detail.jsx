@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 
 import getElemById from './helpers/getElemById';
 import getElemsById from './helpers/getElemsById';
+import { getAllCategories } from '../../store/actions/categories';
 
 class Detail extends Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class Detail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('[CategoriesDetail] WillReceiveProps');
     const { categories, topics, match } = nextProps;
     const { categoryId } = match.params;
     const { category } = this.state;
@@ -57,7 +59,7 @@ class Detail extends Component {
             <h3>Топики</h3>
           </Col>
           <Col>
-            <a className="btn btn-primary float-right" role="button" href="/">Добавить топик</a>
+            <Link className="btn btn-primary float-right" to="/topic/add" role="button">Добавить топик</Link>
           </Col>
         </Row>
         <Col>
@@ -116,7 +118,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Detail);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAllCategories: () => dispatch(getAllCategories()),
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Detail);
 
 Detail.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,

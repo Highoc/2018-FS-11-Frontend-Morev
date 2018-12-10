@@ -1,43 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import TextInput from './components/TextInput';
 import ImageInput from './components/ImageInput';
 import GeoInput from './components/GeoInput';
 
-import getCSRFToken from './helpers/getCSRFToken';
-import setCookie from './helpers/setCookie';
-
 import './static/styles/AuthorInfo.css';
+import { backend } from '../../configs/configs';
 
 export default class AuthorInfoForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      status: statuses.WAIT,
-      csrfmiddlewaretoken: '',
+      status: statuses.READY,
     };
-
-    const token = getCSRFToken();
-    token.then(
-      (data) => {
-        this.setState({
-          status: statuses.READY,
-          csrfmiddlewaretoken: data.csrfmiddlewaretoken,
-        });
-      },
-      (reject) => {
-        console.log(reject);
-        this.setState({ status: statuses.ERROR });
-      },
-    );
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
-    const { status, csrfmiddlewaretoken } = this.state;
+    const { status } = this.state;
     const { action } = this.props;
 
     if (status !== statuses.READY) {
@@ -48,26 +32,18 @@ export default class AuthorInfoForm extends Component {
     const form = document.forms.AuthorInfoForm;
     const formData = new FormData(form);
 
-    setCookie('csrftoken', csrfmiddlewaretoken, 10);
-
-    const request = new Request(`http://localhost:8000/${action}/`);
-    const initPOST = {
-      method: 'POST',
-      credentials: 'include',
-      body: formData,
-    };
 
     this.setState({ status: statuses.LOADING });
-    fetch(request, initPOST)
-      .then(resp => resp.json())
-      .then(
-        (data) => {
-          this.setState({ status: statuses.SUCCESS });
-        },
-        (reject) => {
-          this.setState({ status: statuses.ERROR });
-        },
-      );
+
+    axios.post(`${backend}/${action}/`, formData)
+      .then((result) => {
+        console.log(`[AuthorInfo] Status code: ${result.status}`);
+        this.setState({ status: statuses.SUCCESS });
+      })
+      .catch((error) => {
+        this.setState({ status: statuses.ERROR });
+        console.log(`[AuthorInfo] Error: ${error}`);
+      });
 
     event.preventDefault();
     return false;
@@ -75,7 +51,7 @@ export default class AuthorInfoForm extends Component {
 
   render() {
     const { action, method, enctype } = this.props;
-    const { status, csrfmiddlewaretoken } = this.state;
+    const { status } = this.state;
     return (
       <div className="AuthorInfo px-5 pt-5">
         <h2>Ваши данные</h2>
@@ -136,8 +112,6 @@ export default class AuthorInfoForm extends Component {
               />
             </div>
           </div>
-          <input type="hidden" name="csrfmiddlewaretoken" value={csrfmiddlewaretoken} />
-
         </form>
       </div>
     );
@@ -151,7 +125,7 @@ AuthorInfoForm.propTypes = {
 };
 
 AuthorInfoForm.defaultProps = {
-  action: 'test',
+  action: 'profile',
   method: 'post',
   enctype: 'multipart/form-data',
 };

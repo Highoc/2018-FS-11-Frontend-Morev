@@ -24,6 +24,7 @@ import { loginCheckState } from './store/actions/auth';
 import AuthorInfo from './app/AuthorInfo/AuthorInfoForm';
 import Footer from './app/Footer/Footer';
 import Category from './app/Categories/Category';
+import Topic from './app/Topics/Topic';
 import NavBar from './app/Navbar/Navbar';
 import FeedbackContainer from './app/FeedbackContainer/FeedbackContainer';
 import Registration from './app/Authorization/Registration';
@@ -63,6 +64,7 @@ class App extends Component {
             <Route path="/home" exact component={Home} />
             <Route path="/user" exact component={AuthorInfo} />
             <Route path="/category" component={Category} />
+            <Route path="/topic" component={Topic} />
             <Route path="/feedback" exact component={FeedbackContainer} />
             <Redirect to="/home" />
           </Switch>
