@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
 import { Container, Button } from 'mdbreact';
+import axios from 'axios';
 
 import Input from '../../components/Input/Input';
 import valueIsValid from '../../helpers/validationHelpers';
+import { backend } from '../../configs/configs';
 
 export default class FeedbackContainer extends Component {
   state = {
@@ -89,7 +91,13 @@ export default class FeedbackContainer extends Component {
       {},
     );
 
-    console.log(formData);
+    axios.post(`${backend}/feedback/`, formData)
+      .then((result) => {
+        console.log(`[FeedbackContainer] Status code: ${result.status}`);
+      })
+      .catch((error) => {
+        console.log(`[FeedbackContainer] Error: ${error}`);
+      });
   };
 
   render() {
